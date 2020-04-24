@@ -8,37 +8,77 @@
   <title>Santa Clara County Food Options</title>
   <style>
     /* CSJ created styles. These styles override the styles that came with the app code. */
-    body {background-color:rgb(238,238,238)}
-    #addressSearchTitle {font-size:26px; z-index:100; position:relative; top:px; margin-left:auto; margin-right:auto; left:0; right:0;}
-	#addressSearch {border-radius:4px; z-index:99; position:relative; top:px; margin-left:auto; margin-right:auto; left:0; right:0; height:30px; width:300px; border:solid 1px black;}
-	#addressSearchSuggest {border-radius:4px; position:absolute; top:; visibility:hidden; padding:3px; z-index:98; margin-left:auto; margin-right:auto; left:0; right:0; width:300px; border:solid 1px black; background-color:white; font-family:arial;}
-	.selectSuggestion {width:100%; height:24px; color:#575757;}
-	.selectSuggestion:hover {background-color:#CCCCCC; cursor:pointer;}
-	#addressSearchSuggest p {position:absolute; bottom:0; left:5px; font-family:arial; font-size:11px; color:#808080;}
-	#addressSearchSuggest td {font-family:arial; font-size:11px; color:#808080;}
-	#addressContainer {border:solid 0px black; background-color:rgb(72,194,249); padding-top:4px; padding-bottom:20px;}
-	#addressContainer h1 {color:white}
-	#addressContainer h2 {color:white}
-	#mapLinkTitle {font-size:26px; padding-left:24px; color:white;}
-	#mapLinkContainer {border:solid 0px black; background-color:rgb(72,194,249); padding-top:20px; padding-bottom:20px; cursor:pointer;}
-	.labelMiles {color:white; font-size:14px;}
+    body {background-color:#F2F2F2; color:#000000; background-image:url('assets/img/logo_sanjose_white.png'); background-repeat: no-repeat;}
+    
+    .translated {font-size:20px; font-weight: 300; color:#333; text-decoration:none;}
+      
+    #addressSearchTitle {font-size:20px; font-weight:700; z-index:100; position:relative; top:px; margin-left:auto; margin-right:auto; left:0; right:0;}
+	
+    .addressContainer {float:block; margin-top:5px;}  
+      
+    #addressSearch {float:left; margin-top: 5px; border-radius:4px; z-index:99; height:44px; padding: 10px; width:100%; border:solid 1px black;}
+	
+    #addressSearchSuggest {border-radius:4px; position:absolute; visibility:hidden; padding:10px; z-index:98; float: left; width:50%; border:solid 1px black; background-color:white;}
+	
+    .selectSuggestion {width:100%; height:24px; color:#575757;}
+	
+    .selectSuggestion:hover {background-color:#CCCCCC; cursor:pointer;}
+	
+    #addressSearchSuggest p {position:absolute; bottom:0; left:5px; font-size:11px; color:#808080;}
+	
+    #addressSearchSuggest td {font-size:11px; color:#808080;}
+	
+    #addressContainer {border:solid 0px black; padding-top:4px; padding-bottom:20px;}
+	
+    h1 {font-size:36px; font-weight:bold; text-align: left; text-decoration: underline; text-decoration-color:#E5BF24;}
+	
+    #addressContainer h2 {margin-top: 2em; text-align: left;}
+	
+    /* #mapLinkTitle {font-size:26px; padding-left:24px; color:white;} 
+    #mapLinkContainer {border:solid 0px black; background-color:rgb(72,194,249); padding-top:20px; padding-bottom:20px; cursor:pointer;} */
+      
+	.labelMiles {font-size:14px;}
+      
 	.textLine {line-height:90%; padding:1px; margin:1px; border:0;}
+      
 	.textTitle {color:#A0CABB;}
+      
 	.textNone {color:#F2B3A6}
+      
 	.textHeading {width:80%; line-height:90%; color:#f5f5f5;}
+      
 	.textDistance {color:#a5b6d4}
+      
 	.textSpan {width:80%;}
+      
 	.imgInline {padding-right:8px;}
+      
 	#accordionMain {color:white}
   </style>
 </head>
-<body style="padding: 3em 0">
+<body style="padding: 5em 0">
 <section class="container max-width-sm">
-  <div class="text-component text-center" id="addressContainer">
+
+     <div class="text-component text-center" id="addressContainer">
       <!--<p><a href="https://codyhouse.co/gem/css-multi-level-accordion-menu" class="cd-article-link">Article & Download</a></p>-->
-      <h1>Nearby Free Meal Sites</h1>
+      <h1>Find free food near me</h1>
+      <h1 class="translated">Encuentra comida gratis cerca de mí</h1>
+      <h1 class="translated">Tìm đồ ăn miễn phí gần tôi</h1>
+      
       <!--START Address Box-->
-		<input type="radio" id="label1Mile" name="gender" value="1609" onchange="onChangeOfRadio()"><!--value is in meters-->
+	  <div class="text-component text-center">
+	  <div></div>
+	  <h2 id="addressSearchTitle">Enter your address:</h2>
+      </div>
+	  
+	  <div>
+	  <input id="addressSearch" type="text" oninput="getSearchSuggestions(this.value)" onkeypress="if(event.which == 13 || event.keyCode == 13){searchForThisAddress(this.value, null)}" />
+      </div>
+      
+      </div>
+	  <!-- Radio buttons -->
+	  <div class=addressContainer>
+	  <input type="radio" id="label1Mile" name="gender" value="1609" onchange="onChangeOfRadio()"><!--value is in meters-->
 		<label for="label1Mile" class="labelMiles">1 Mile&nbsp;</label>
 		<input type="radio" id="label2Miles" name="gender" value="3218" onchange="onChangeOfRadio()" checked>
 		<label for="label2Miles" class="labelMiles">2 Miles&nbsp;</label>
@@ -46,9 +86,8 @@
 		<label for="label5Miles" class="labelMiles">5 Miles&nbsp;</label>
 		<input type="radio" id="label10Miles" name="gender" value="16093" onchange="onChangeOfRadio()">
 		<label for="label10Miles" class="labelMiles">10 Miles&nbsp;</label>
-	  <div class="text-component text-center"><h2 id="addressSearchTitle">Enter Your Address</h2></div>
-	  <input id="addressSearch" type="text" oninput="getSearchSuggestions(this.value)" onkeypress="if(event.which == 13 || event.keyCode == 13){searchForThisAddress(this.value, null)}" />
-  </div>
+      </div>
+        
   <div id="addressSearchSuggest"></div>
   <!--END Address Box-->
 
@@ -56,11 +95,15 @@
 	<ul class="cd-accordion cd-accordion--animated margin-top-lg margin-bottom-lg" id="accordionMain">
 		&nbsp;<br />
 		<center><table><tr><td><img src='assets/img/logo_sanjose_white.png' height='70px' />&nbsp; &nbsp;</td><td>&nbsp; &nbsp;<img src='assets/img/logo_county.png' height='80px' /></td></tr></table></center>
-		<p style="padding:10px;">Look up the location of free meal food programs across Santa Clara County during the COVID-19 outbreak. Type your address into the search bar above to allow the app to find all free meal sites within the selected number of miles of your address. The panel will show 4 kinds of food sites: senior free meal sites, youth free meal sites, free meal sites for the community, and free groceries from food banks / partner programs for lower income residents. Click on one of the food site types and a list (max of 20) is shown ordered with nearest on top. Click on a site on the list to see details about that site.</p>
+		<ul style="padding:30px;">Look up the following near you:
+<li>[icon] Senior meal programs for seniors 60 yrs & older </li>
+<li>[icon] School meal programs  for youth 18 yrs & younger </li>
+<li>[icon] Community meal programs serving all ages</li> 
+<li>[icon] Grocery programs for low-income residents</li> 
 	</ul>
 	<!--END Main content-->
 	
-	<!--Map button, just using the address style classes again-->
+	<!--Map button, just using the address style classes again
 	<div class="text-component text-center" id="mapLinkContainer" onclick="window.location.href = 'https://gis.sanjoseca.gov/maps/covid19foodpublic'">
 		<center><img style="vertical-align:middle; display:inline;" src='assets/img/icon_map.png' height="60px" /><span id="mapLinkTitle">View as a Map</span></center>
 	</div>
